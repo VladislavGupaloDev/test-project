@@ -71,10 +71,10 @@ export function RatingPage() {
           шоколадных батончиков
         </h1>
       </div>
-      <div className='h-fit'>
+      <div className='h-full min-h-fit'>
         {isLoading ? (
           <div className='flex h-full flex-col gap-2 sm:gap-5'>
-            <SkeletonGroup className='h-full max-h-90 min-h-60 w-full rounded-sm' />
+            <SkeletonGroup className='h-full w-full rounded-sm' />
           </div>
         ) : !raport ? (
           <RateVote data={paginated} />
