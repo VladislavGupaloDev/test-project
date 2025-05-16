@@ -4,7 +4,7 @@ import { RatingPage } from '@/pages/RatingPage'
 
 function App() {
   return (
-    <div className='relative flex h-svh items-center justify-center'>
+    <div className='relative flex h-screen items-center justify-center'>
       <RatingPage />
     </div>
   )
