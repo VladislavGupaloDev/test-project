@@ -1,17 +1,68 @@
-import response from '@/db.json'
-import { StarsRating } from '@/feature/StarsRating/ui/StarsRating'
-import { Button } from '@/shared/ui/Button'
-import { ProgressBar } from '@/shared/ui/ProgressBar'
-import { Separator } from '@/shared/ui/Separator'
-import { useState } from 'react'
+import {
+  useAppDispatch,
+  useAppSelector
+} from '@/app/providers/StoreProvider/hooks'
+import {
+  selectRates,
+  setRateData
+} from '@/entities/RatingVote/model/rating.slice'
+import { usePagination } from '@/shared/lib/hooks/usePaginated'
+import { SkeletonGroup } from '@/shared/ui/SkeletonGroup'
+import { RatePagination } from '@/widgets/RatePagination'
+import { RateRaport } from '@/widgets/RateRaport'
+import { RateVote } from '@/widgets/RateVote'
+import { useEffect, useState } from 'react'
 
 export function RatingPage() {
-  const [data, setData] = useState(response.data)
-  const [page, setPage] = useState(0)
-  const limit = 2
-  const maxPages = data.length / limit
-  const progressPercent = (((page * limit) / data.length) * 100).toFixed()
-  console.log(progressPercent)
+  const ratings = useAppSelector(selectRates)
+  const [isLoading, setIsLoading] = useState(true)
+  const [raport, setRaport] = useState(false)
+  const { cursors, lastPage, next, prev, page } = usePagination(
+    ratings.length - 1,
+    2
+  )
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/src/db.json')
+        dispatch(setRateData(await response.json()))
+      } catch (error) {
+        console.error(error)
+        setIsLoading(false)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchData()
+  }, [dispatch])
+
+  const progressPercent = !raport
+    ? ((cursors.left / ratings.length) * 100).toFixed()
+    : 100
+  const nextStepHandle = () => {
+    if (raport) {
+      submit()
+    }
+    if (lastPage) {
+      setRaport(true)
+      return
+    }
+    next()
+  }
+  const prevStepHandle = () => {
+    if (raport) {
+      setRaport(false)
+      return
+    }
+    prev()
+  }
+  const submit = () => {
+    console.log(ratings)
+  }
+
+  const paginated = ratings.slice(cursors.left, cursors.right)
+
   return (
     <div className='container flex h-full w-full flex-col gap-3 p-5'>
       <div className='flex justify-center border px-4 py-2'>
@@ -20,51 +71,26 @@ export function RatingPage() {
           шоколадных батончиков
         </h1>
       </div>
-      <div className='flex h-full flex-col gap-2 sm:gap-5'>
-        {data.slice(page * limit, page * limit + limit).map(item => (
-          <div
-            key={item.title}
-            className='flex max-h-50 min-h-45 w-full items-center justify-center gap-4 overflow-hidden rounded-sm border border-zinc-50 bg-black p-4 xl:max-h-55 2xl:max-h-60'
-          >
-            <img
-              className='h-full shrink-0 object-cover'
-              src={item.image}
-              alt={item.title}
-              role='img'
-              tabIndex={0}
-            />
-            <div className='flex h-full max-w-full flex-1 flex-col'>
-              <h2 className='text-center text-2xl font-semibold capitalize sm:text-3xl md:text-4xl'>
-                {item.title}
-              </h2>
-              <StarsRating
-                increaseCn='scale-110 fill-amber-300 stroke-amber-50 stroke-1'
-                decreaseCn='scale-75 fill-amber-100'
-                max={10}
-                className='max-h-full md:h-full'
-              />
-            </div>
-          </div>
-        ))}
-
-        <div className='flex flex-col items-center justify-center gap-2 p-1 sm:flex-row'>
-          <ProgressBar
-            value={+progressPercent}
-            className='h-4 sm:h-full sm:flex-3/4 sm:p-0.5'
-          />
-          <Separator
-            orientation='vertical'
-            className='hidden sm:visible'
-          />
-          <Button
-            className='flex-1/4 rounded-sm text-xl'
-            onClick={() => setPage(prev => prev + 1)}
-            disabled={page >= maxPages - 1}
-          >
-            Далее
-          </Button>
+      {isLoading ? (
+        <div className='flex h-full flex-col gap-2 sm:gap-5'>
+          <SkeletonGroup className='h-full max-h-90 min-h-60 w-full rounded-sm' />
         </div>
-      </div>
+      ) : !raport ? (
+        <RateVote data={paginated} />
+      ) : (
+        <RateRaport
+          data={ratings}
+          className='flex-1'
+        />
+      )}
+      <RatePagination
+        prev={prevStepHandle}
+        next={nextStepHandle}
+        disablePrev={page === 0 || isLoading}
+        disableNext={isLoading}
+        progress={+progressPercent}
+        nextContent={raport ? 'Отправить' : 'Далее'}
+      />
     </div>
   )
 }
