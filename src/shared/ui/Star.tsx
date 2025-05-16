@@ -2,7 +2,7 @@ import { StarIcon } from '../assets/StarIcon'
 import { cn } from '../lib/helpers/cn'
 import type { ComponentProps } from 'react'
 
-//* Можно было задать стиль и по data-attribute, но он имеет больше вес больше чем остальные классы
+//* Можно было задать стиль и по data-attribute, но он имеет больше вес больше придется через important (-dx)
 export function Star({
   className,
   choosed = false,

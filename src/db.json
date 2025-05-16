@@ -1,36 +1,43 @@
 {
   "data": [
     {
+      "id": "mars-classic-001",
       "image": "https://img.fix-price.com/800x800/pim/pimcore-prod/images/Migration4_Import/529e064ab66ceb09b97465260e20bea6.jpg",
       "title": "Марс Классический",
       "rate": null
     },
     {
+      "id": "nuts-classic-002",
       "image": "https://img.fix-price.com/800x800/pim/pimcore-prod/images/Migration4_Import/1964d768ee5b9b454d607ee93ff946f3.jpg",
       "title": "Натс Классический",
       "rate": null
     },
     {
+      "id": "snickers-classic-003",
       "image": "https://img.fix-price.com/800x800/pim/pimcore-prod/images/Migration4_Import/1a5ddb454d93b578875ce6350014eecd.jpg",
       "title": "Сникерс Классический",
       "rate": null
     },
     {
+      "id": "twix-classic-004",
       "image": "https://img.fix-price.com/800x800/pim/pimcore-prod/images/_default_upload_bucket/afc70357b6450fdbe757f644d580ff54.jpg",
       "title": "Твикс Классический",
       "rate": null
     },
     {
+      "id": "snickers-crisper-005",
       "image": "https://img.fix-price.com/800x800/pim/pimcore-prod/images/Migration4_Import/5db0159149a2c4a47cbfe25cd7535ae7.jpg",
       "title": "Сникерс Криспер",
       "rate": null
     },
     {
+      "id": "snickers-super-006",
       "image": "https://img.fix-price.com/800x800/_marketplace/images/origin/8d/8df218df18e1fdb31ef965a7566c2f52.jpg",
       "title": "Сникерс Супер",
       "rate": null
     },
     {
+      "id": "twix-extra-007",
       "image": "https://img.fix-price.com/800x800/pim/pimcore-prod/images/_default_upload_bucket/afc70357b6450fdbe757f644d580ff54.jpg",
       "title": "Твикс Экстра",
       "rate": null
