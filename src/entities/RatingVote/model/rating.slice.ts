@@ -22,7 +22,7 @@ export const rateSlice = createSlice({
   name: 'rating',
   initialState,
   reducers: {
-    setRateData(state, action: PayloadAction<RatingsResponse>) {
+    setRateData(_state, action: PayloadAction<RatingsResponse>) {
       return action.payload
     },
     setRate: (
