@@ -22,3 +22,12 @@ npm run dev
 Tailwind (Да и все, ну и утилити twMerge + clsx))
 
 Сразу скажу, где-то оставлял коментарии для себя и свои рассуждения
+
+
+Демонстрация Responsive
+
+![Responsive Demo](./docs/responsive.gif)
+
+Демонстрация StartRating
+
+![Rating Demo](./docs/stars_demonstration.gif)
